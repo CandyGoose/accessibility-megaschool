@@ -13,9 +13,8 @@ export const CATEGORIES = [
   { id: 'other', name: 'Другое' },
 ]
 
-let nextId = 3
-let nextCommentId = 1
-const gamesList = [
+const STORAGE_KEY = 'megaschool_games'
+const defaultGames = [
   {
     id: '1',
     title: 'Угадай звук',
@@ -49,6 +48,40 @@ const gamesList = [
     comments: [],
   },
 ]
+
+let nextId = 3
+let nextCommentId = 1
+const gamesList = [...defaultGames]
+
+function loadGames() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return
+    const data = JSON.parse(raw)
+    if (!data || !Array.isArray(data.games)) return
+    const maxId = data.games.reduce((m, g) => Math.max(m, Number(g.id) || 0), 0)
+    const maxC = data.games.reduce((m, g) => {
+      const arr = g.comments ?? []
+      return arr.reduce((mc, c) => Math.max(mc, Number(c.id) || 0), m)
+    }, 0)
+    gamesList.length = 0
+    gamesList.push(...data.games)
+    nextId = (Number(data.nextId) > maxId ? Number(data.nextId) : maxId + 1) || 3
+    nextCommentId = (Number(data.nextCommentId) > maxC ? Number(data.nextCommentId) : maxC + 1) || 1
+  } catch {}
+}
+
+function saveGames() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      games: gamesList,
+      nextId,
+      nextCommentId,
+    }))
+  } catch {}
+}
+
+loadGames()
 
 export const games = gamesList
 
@@ -95,6 +128,7 @@ export function addGame(data) {
     comments: [],
   }
   gamesList.push(game)
+  saveGames()
   return game
 }
 
@@ -104,6 +138,7 @@ export function approveGame(id) {
   g.status = GAME_STATUS.PUBLISHED
   g.publishedAt = new Date().toISOString().slice(0, 10)
   g.rejectReason = null
+  saveGames()
   return g
 }
 
@@ -112,17 +147,24 @@ export function rejectGame(id, reason) {
   if (!g || g.status !== GAME_STATUS.ON_MODERATION) return null
   g.status = GAME_STATUS.REJECTED
   g.rejectReason = reason ?? ''
+  saveGames()
   return g
 }
 
 export function recordView(gameId) {
   const g = gamesList.find((x) => x.id === gameId)
-  if (g) g.views = (g.views ?? 0) + 1
+  if (g) {
+    g.views = (g.views ?? 0) + 1
+    saveGames()
+  }
 }
 
 export function recordLaunch(gameId) {
   const g = gamesList.find((x) => x.id === gameId)
-  if (g) g.launches = (g.launches ?? 0) + 1
+  if (g) {
+    g.launches = (g.launches ?? 0) + 1
+    saveGames()
+  }
 }
 
 export function addRating(gameId, userId, userName, value) {
@@ -134,6 +176,7 @@ export function addRating(gameId, userId, userName, value) {
   } else {
     g.ratings.push({ userId, userName, value })
   }
+  saveGames()
   return g
 }
 
@@ -155,6 +198,7 @@ export function addComment(gameId, userId, userName, text) {
     text: text.trim(),
     date: new Date().toISOString(),
   })
+  saveGames()
   return g
 }
 
