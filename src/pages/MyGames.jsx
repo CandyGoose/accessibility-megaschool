@@ -47,6 +47,11 @@ function MyGames() {
               <p className="my-games-list__status">
                 Статус: <span className={`my-games-list__status-badge my-games-list__status-badge--${game.status}`}>{statusLabel(game.status)}</span>
               </p>
+              {game.status === GAME_STATUS.PUBLISHED && (
+                <p className="my-games-list__stats">
+                  Просмотры: {game.views ?? 0}, запуски: {game.launches ?? 0}
+                </p>
+              )}
               {game.rejectReason && (
                 <p className="my-games-list__reject">Причина отклонения: {game.rejectReason}</p>
               )}
