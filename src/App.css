@@ -1,42 +1,109 @@
-#root {
-  max-width: 1280px;
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 16px 24px;
+  background: #f0f0f0;
+  border-bottom: 2px solid #1a1a1a;
+}
+
+.header__inner {
+  max-width: 900px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.logo a {
+  text-decoration: none;
+  color: #1a1a1a;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.logo a:hover {
+  color: #0066cc;
 }
 
-.card {
-  padding: 2em;
+.nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 24px;
 }
 
-.read-the-docs {
-  color: #888;
+.nav__link {
+  font-weight: 500;
+}
+
+.main {
+  flex: 1;
+  padding: 32px 24px;
+}
+
+.main__inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.main h1 {
+  font-size: 2rem;
+  margin: 0 0 24px;
+}
+
+.main h2 {
+  font-size: 1.5rem;
+  margin: 32px 0 16px;
+}
+
+.main p {
+  margin: 0 0 16px;
+}
+
+.games-list {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.games-list__item {
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.games-list__item h3 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+}
+
+.games-list__item p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.footer {
+  padding: 24px;
+  background: #f0f0f0;
+  border-top: 2px solid #1a1a1a;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.footer__inner {
+  max-width: 900px;
+  margin: 0 auto;
 }
