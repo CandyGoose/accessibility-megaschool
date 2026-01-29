@@ -22,6 +22,7 @@ function Game() {
   const [commentText, setCommentText] = useState('')
   const [commentName, setCommentName] = useState(user?.name ?? '')
   const [refresh, setRefresh] = useState(0)
+  const [showGameFrame, setShowGameFrame] = useState(false)
 
   useEffect(() => {
     if (game?.id) recordView(game.id)
@@ -41,6 +42,7 @@ function Game() {
   const category = getCategoryById(game.categoryId)
 
   function handlePlayClick() {
+    setShowGameFrame(true)
     recordLaunch(game.id)
   }
 
@@ -82,15 +84,26 @@ function Game() {
       )}
       {game.status === GAME_STATUS.PUBLISHED ? (
         <>
-          <a
-            href={game.playUrl}
-            className="game-play-btn"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handlePlayClick}
-          >
-            Играть
-          </a>
+          <div className="game-play-area">
+            {!showGameFrame ? (
+              <button
+                type="button"
+                className="game-play-btn"
+                onClick={handlePlayClick}
+              >
+                Играть
+              </button>
+            ) : (
+              <div className="game-frame-wrap">
+                <iframe
+                  src={game.playUrl}
+                  title={game.title}
+                  className="game-frame"
+                  allow="fullscreen; gamepad"
+                />
+              </div>
+            )}
+          </div>
           <section className="game-rating-section" aria-label="Оценить игру">
             <h2>Оценить игру</h2>
             <form onSubmit={handleRatingSubmit} className="game-rating-form">

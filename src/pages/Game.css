@@ -8,14 +8,21 @@
   color: #555;
 }
 
+.game-play-area {
+  margin: 24px 0;
+}
+
 .game-play-btn {
   display: inline-block;
   padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
   background: #0066cc;
   color: #fff;
-  font-weight: 600;
-  text-decoration: none;
+  border: none;
   border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .game-play-btn:hover {
@@ -26,6 +33,23 @@
   outline: 3px solid #0066cc;
   outline-offset: 2px;
 }
+
+.game-frame-wrap {
+  width: 100%;
+  max-width: 900px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+}
+
+.game-frame {
+  display: block;
+  width: 100%;
+  height: 500px;
+  border: none;
+}
+
 
 .game-status-msg {
   color: #555;
