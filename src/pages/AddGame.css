@@ -1,0 +1,54 @@
+.add-game-form {
+  max-width: 500px;
+  margin: 24px 0;
+}
+
+.add-game-form__label {
+  display: block;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.add-game-form__input,
+.add-game-form__textarea {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-game-form__textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.add-game-form__input:focus,
+.add-game-form__textarea:focus {
+  outline: none;
+  border-color: #0066cc;
+}
+
+.add-game-form__submit {
+  margin-top: 16px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #0066cc;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-game-form__submit:hover {
+  background: #004499;
+}
+
+.add-game-form__submit:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
