@@ -31,6 +31,12 @@
   font-size: 0.95rem;
 }
 
+.my-games-list__stats {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
 .my-games-list__status-badge--published {
   color: #0a0;
 }

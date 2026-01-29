@@ -26,8 +26,46 @@
   min-height: 100px;
 }
 
+.add-game-form__select {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 4px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-game-form__accessibility {
+  margin: 24px 0;
+  padding: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.add-game-form__accessibility legend {
+  font-weight: 600;
+  padding: 0 8px;
+}
+
+.add-game-form__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  cursor: pointer;
+}
+
+.add-game-form__checkbox input {
+  width: 18px;
+  height: 18px;
+}
+
 .add-game-form__input:focus,
-.add-game-form__textarea:focus {
+.add-game-form__textarea:focus,
+.add-game-form__select:focus {
   outline: none;
   border-color: #0066cc;
 }
