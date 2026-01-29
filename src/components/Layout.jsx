@@ -1,10 +1,17 @@
 import { Outlet } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 import './Layout.css'
 
 function Layout() {
   const { user, logout, isAuthor, isModerator } = useAuth()
+  const { theme, setTheme } = useTheme()
+  const themeOptions = [
+    { value: 'light', label: 'Светлая' },
+    { value: 'dark', label: 'Темная' },
+    { value: 'contrast', label: 'Контрастная' },
+  ]
   return (
     <div className="app">
       <Link to="/#main" className="skip-link">
@@ -17,6 +24,22 @@ function Layout() {
           </h1>
           <nav className="nav" aria-label="Главное меню">
             <ul className="nav__list">
+              <li>
+                <label className="nav__theme-label" htmlFor="theme-select">
+                  Тема
+                </label>
+                <select
+                  id="theme-select"
+                  className="nav__theme"
+                  value={theme}
+                  onChange={(e) => setTheme(e.target.value)}
+                  aria-label="Выбор темы оформления"
+                >
+                  {themeOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
+              </li>
               <li><Link to="/" className="nav__link">Главная</Link></li>
               <li><Link to="/games" className="nav__link">Игры</Link></li>
               {isAuthor && (

@@ -8,9 +8,9 @@
 
 .my-games-list__item {
   padding: 20px;
-  border: 2px solid #ccc;
+  border: 2px solid var(--color-border-light);
   border-radius: 8px;
-  background: #f9f9f9;
+  background: var(--color-card-bg);
 }
 
 .my-games-list__title {
@@ -34,27 +34,27 @@
 .my-games-list__stats {
   margin: 4px 0 0;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--color-text-muted);
 }
 
 .my-games-list__status-badge--published {
-  color: #0a0;
+  color: var(--color-ok);
 }
 
 .my-games-list__status-badge--on_moderation {
-  color: #c60;
+  color: var(--color-warn);
 }
 
 .my-games-list__status-badge--rejected {
-  color: #c00;
+  color: var(--color-err);
 }
 
 .my-games-list__status-badge--draft {
-  color: #555;
+  color: var(--color-text-muted);
 }
 
 .my-games-list__reject {
   margin: 8px 0 0;
   font-size: 0.9rem;
-  color: #c00;
+  color: var(--color-err);
 }

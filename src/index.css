@@ -9,8 +9,78 @@
   line-height: 1.6;
   font-weight: 400;
   font-size: 18px;
-  color: #1a1a1a;
-  background-color: #fff;
+  --color-bg: #fff;
+  --color-bg-alt: #f0f0f0;
+  --color-text: #1a1a1a;
+  --color-text-muted: #555;
+  --color-link: #0066cc;
+  --color-link-hover: #004499;
+  --color-border: #1a1a1a;
+  --color-border-light: #ccc;
+  --color-focus: #0066cc;
+  --color-card-bg: #f9f9f9;
+  --color-ok: #0a0;
+  --color-ok-hover: #080;
+  --color-err: #c00;
+  --color-err-hover: #a00;
+  --color-warn: #c60;
+  --color-btn: #0066cc;
+  --color-btn-hover: #004499;
+}
+
+[data-theme="dark"] {
+  --color-bg: #1a1a1a;
+  --color-bg-alt: #2a2a2a;
+  --color-text: #e8e8e8;
+  --color-text-muted: #aaa;
+  --color-link: #6eb3f7;
+  --color-link-hover: #9cc9fa;
+  --color-border: #e8e8e8;
+  --color-border-light: #555;
+  --color-focus: #6eb3f7;
+  --color-card-bg: #252525;
+  --color-ok: #4a4;
+  --color-ok-hover: #3a3;
+  --color-err: #f66;
+  --color-err-hover: #e55;
+  --color-warn: #fa6;
+  --color-btn: #4a8fd4;
+  --color-btn-hover: #6eb3f7;
+}
+
+[data-theme="contrast"] {
+  --color-bg: #000;
+  --color-bg-alt: #000;
+  --color-text: #fff;
+  --color-text-muted: #fff;
+  --color-link: #ff0;
+  --color-link-hover: #ff0;
+  --color-border: #fff;
+  --color-border-light: #fff;
+  --color-focus: #ff0;
+  --color-card-bg: #000;
+  --color-ok: #0f0;
+  --color-ok-hover: #0f0;
+  --color-err: #f00;
+  --color-err-hover: #f00;
+  --color-warn: #ff0;
+  --color-btn: #ff0;
+  --color-btn-hover: #ff0;
+}
+
+[data-theme="contrast"] button {
+  color: #000;
+}
+
+[data-theme="contrast"] a:focus-visible,
+[data-theme="contrast"] button:focus-visible,
+[data-theme="contrast"] [tabindex="0"]:focus-visible {
+  outline-width: 4px;
+}
+
+:root {
+  color: var(--color-text);
+  background-color: var(--color-bg);
 }
 
 body {
@@ -20,23 +90,23 @@ body {
 }
 
 a {
-  color: #0066cc;
+  color: var(--color-link);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
 
 a:hover {
-  color: #004499;
+  color: var(--color-link-hover);
 }
 
 a:focus-visible {
-  outline: 3px solid #0066cc;
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
 }
 
 button:focus-visible,
 [tabindex="0"]:focus-visible {
-  outline: 3px solid #0066cc;
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
 }
 
@@ -45,14 +115,14 @@ button:focus-visible,
   top: -100px;
   left: 8px;
   padding: 12px 16px;
-  background: #1a1a1a;
-  color: #fff;
+  background: var(--color-text);
+  color: var(--color-bg);
   z-index: 100;
   font-size: 1rem;
 }
 
 .skip-link:focus {
   top: 8px;
-  outline: 3px solid #0066cc;
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
 }

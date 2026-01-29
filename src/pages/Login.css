@@ -16,14 +16,14 @@
   margin-top: 4px;
   padding: 8px 12px;
   font-size: 1rem;
-  border: 2px solid #ccc;
+  border: 2px solid var(--color-border-light);
   border-radius: 4px;
 }
 
 .login-form__input:focus,
 .login-form__select:focus {
   outline: none;
-  border-color: #0066cc;
+  border-color: var(--color-focus);
 }
 
 .login-form__submit {
@@ -31,7 +31,7 @@
   padding: 12px 24px;
   font-size: 1rem;
   font-weight: 600;
-  background: #0066cc;
+  background: var(--color-focus);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -39,11 +39,11 @@
 }
 
 .login-form__submit:hover {
-  background: #004499;
+  background: var(--color-btn-hover);
 }
 
 .login-form__submit:focus-visible {
-  outline: 3px solid #0066cc;
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
 }
 

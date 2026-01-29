@@ -5,7 +5,7 @@
 .game-meta {
   margin: 0 0 24px;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--color-text-muted);
 }
 
 .game-play-area {
@@ -17,7 +17,7 @@
   padding: 12px 24px;
   font-size: 1rem;
   font-weight: 600;
-  background: #0066cc;
+  background: var(--color-btn);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -26,18 +26,18 @@
 }
 
 .game-play-btn:hover {
-  background: #004499;
+  background: var(--color-btn-hover);
 }
 
 .game-play-btn:focus-visible {
-  outline: 3px solid #0066cc;
+  outline: 3px solid var(--color-btn);
   outline-offset: 2px;
 }
 
 .game-frame-wrap {
   width: 100%;
   max-width: 900px;
-  border: 2px solid #ccc;
+  border: 2px solid var(--color-border-light);
   border-radius: 8px;
   overflow: hidden;
   background: #000;
@@ -52,7 +52,7 @@
 
 
 .game-status-msg {
-  color: #555;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 
@@ -65,7 +65,7 @@
 .game-comments {
   margin-top: 32px;
   padding-top: 24px;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--color-border-light);
 }
 
 .game-rating-section h2,
@@ -91,14 +91,14 @@
   margin-top: 4px;
   padding: 8px 12px;
   font-size: 1rem;
-  border: 2px solid #ccc;
+  border: 2px solid var(--color-border-light);
   border-radius: 4px;
   min-width: 120px;
 }
 
 .game-rating-form__select:focus {
   outline: none;
-  border-color: #0066cc;
+  border-color: var(--color-btn);
 }
 
 .game-rating-form__btn,
@@ -107,7 +107,7 @@
   padding: 10px 20px;
   font-size: 1rem;
   font-weight: 600;
-  background: #0066cc;
+  background: var(--color-btn);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -116,7 +116,7 @@
 
 .game-rating-form__btn:hover,
 .game-comment-form__btn:hover {
-  background: #004499;
+  background: var(--color-btn-hover);
 }
 
 .game-comment-form__input,
@@ -128,7 +128,7 @@
   padding: 8px 12px;
   font-size: 1rem;
   font-family: inherit;
-  border: 2px solid #ccc;
+  border: 2px solid var(--color-border-light);
   border-radius: 4px;
 }
 
@@ -140,7 +140,7 @@
 .game-comment-form__input:focus,
 .game-comment-form__textarea:focus {
   outline: none;
-  border-color: #0066cc;
+  border-color: var(--color-btn);
 }
 
 .game-comments-list {
@@ -155,7 +155,7 @@
   padding: 16px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background: #f9f9f9;
+  background: var(--color-card-bg);
 }
 
 .game-comments-list__author {
@@ -171,10 +171,10 @@
 .game-comments-list__date {
   margin: 0;
   font-size: 0.85rem;
-  color: #555;
+  color: var(--color-text-muted);
 }
 
 .game-comments-empty {
   margin: 0;
-  color: #555;
+  color: var(--color-text-muted);
 }
