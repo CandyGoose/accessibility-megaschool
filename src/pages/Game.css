@@ -1,0 +1,33 @@
+.breadcrumb-sep {
+  margin: 0 4px;
+}
+
+.game-meta {
+  margin: 0 0 24px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.game-play-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #0066cc;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+.game-play-btn:hover {
+  background: #004499;
+}
+
+.game-play-btn:focus-visible {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
+
+.game-status-msg {
+  color: #555;
+  font-style: italic;
+}
