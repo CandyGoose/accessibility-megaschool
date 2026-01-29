@@ -19,7 +19,7 @@ const defaultGames = [
     id: '1',
     title: 'Угадай звук',
     description: 'Игра на распознавание звуков.',
-    playUrl: 'https://example.com/game1',
+    playUrl: '/games/ugadai-zvuk/index.html',
     authorName: 'Автор 1',
     authorId: 'author1',
     categoryId: 'sound',
@@ -35,7 +35,7 @@ const defaultGames = [
     id: '2',
     title: 'Слова на время',
     description: 'Набирайте слова с клавиатуры на время.',
-    playUrl: 'https://example.com/game2',
+    playUrl: '/games/slova-na-vremya/index.html',
     authorName: 'Автор 2',
     authorId: 'author2',
     categoryId: 'words',
@@ -66,6 +66,10 @@ function loadGames() {
     }, 0)
     gamesList.length = 0
     gamesList.push(...data.games)
+    gamesList.forEach((g) => {
+      if (g.id === '1' && (g.playUrl || '').includes('example.com')) g.playUrl = '/games/ugadai-zvuk/index.html'
+      if (g.id === '2' && (g.playUrl || '').includes('example.com')) g.playUrl = '/games/slova-na-vremya/index.html'
+    })
     nextId = (Number(data.nextId) > maxId ? Number(data.nextId) : maxId + 1) || 3
     nextCommentId = (Number(data.nextCommentId) > maxC ? Number(data.nextCommentId) : maxC + 1) || 1
   } catch {}
