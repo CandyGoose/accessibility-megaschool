@@ -1,0 +1,54 @@
+.my-games-list {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+}
+
+.my-games-list__item {
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.my-games-list__title {
+  font-size: 1.25rem;
+  margin: 0 0 8px;
+}
+
+.my-games-list__title a {
+  text-decoration: none;
+}
+
+.my-games-list__title a:hover {
+  text-decoration: underline;
+}
+
+.my-games-list__status {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+}
+
+.my-games-list__status-badge--published {
+  color: #0a0;
+}
+
+.my-games-list__status-badge--on_moderation {
+  color: #c60;
+}
+
+.my-games-list__status-badge--rejected {
+  color: #c00;
+}
+
+.my-games-list__status-badge--draft {
+  color: #555;
+}
+
+.my-games-list__reject {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  color: #c00;
+}
