@@ -9,7 +9,9 @@
     body { font-family: system-ui, sans-serif; padding: 20px; margin: 0; background: #1a1a1a; color: #fff; min-height: 100vh; }
     h1 { font-size: 1.5rem; margin: 0 0 20px; }
     p { margin: 0 0 12px; }
-    .word { font-size: 2rem; font-weight: bold; margin: 20px 0; letter-spacing: 0.1em; }
+    .word-block { margin: 20px 0; }
+    .word-block .word { font-size: 2rem; font-weight: bold; margin: 0 0 8px; letter-spacing: 0.1em; }
+    .word-block .speak { margin: 0; }
     input { font-size: 1.2rem; padding: 12px; width: 100%; max-width: 300px; border: 2px solid #0066cc; border-radius: 8px; background: #333; color: #fff; }
     input:focus { outline: none; border-color: #0af; }
     .timer { font-size: 1.2rem; margin: 16px 0; }
@@ -17,12 +19,18 @@
     .again { margin-top: 20px; padding: 12px 24px; font-size: 1rem; background: #0066cc; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
     .again:hover, .again:focus { background: #0052a3; }
     .again:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+    .speak { padding: 10px 20px; font-size: 1rem; background: #333; color: #fff; border: 2px solid #0066cc; border-radius: 8px; cursor: pointer; }
+    .speak:hover, .speak:focus { background: #0066cc; }
+    .speak:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
   </style>
 </head>
 <body>
   <h1>Слова на время</h1>
   <p>Наберите слово и нажмите Enter. Чем быстрее - тем лучше.</p>
-  <p class="word" id="word" aria-live="polite">-</p>
+  <div class="word-block">
+    <p class="word" id="word" aria-live="polite">-</p>
+    <button type="button" class="speak" id="speakBtn">Произнести</button>
+  </div>
   <label for="input">Введите слово:</label>
   <input type="text" id="input" autocomplete="off" autocapitalize="off" aria-describedby="timer score">
   <p class="timer" id="timer">Время: 0 сек</p>
@@ -38,12 +46,21 @@
     var inputEl = document.getElementById('input');
     var timerEl = document.getElementById('timer');
     var scoreEl = document.getElementById('score');
+    function speakWord() {
+      if (!current || !window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(current);
+      u.lang = 'ru-RU';
+      u.rate = 0.9;
+      window.speechSynthesis.speak(u);
+    }
     function pickWord() {
       current = words[Math.floor(Math.random() * words.length)];
       wordEl.textContent = current;
       inputEl.value = '';
       inputEl.focus();
       startTime = Date.now();
+      speakWord();
       if (timerInterval) clearInterval(timerInterval);
       timerInterval = setInterval(function() {
         timerEl.textContent = 'Время: ' + Math.floor((Date.now() - startTime) / 1000) + ' сек';
@@ -70,6 +87,7 @@
       scoreEl.textContent = 'Угадано: 0';
       pickWord();
     });
+    document.getElementById('speakBtn').addEventListener('click', speakWord);
     pickWord();
   </script>
 </body>
