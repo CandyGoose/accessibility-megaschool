@@ -49,6 +49,9 @@ function AddGame() {
   return (
     <>
       <h1>Добавить игру</h1>
+      <p className="add-game-form__notice" role="note">
+        Загружать можно только игры, предназначенные для слабовидящих пользователей.
+      </p>
       <form className="add-game-form" onSubmit={handleSubmit} aria-label="Форма добавления игры">
         <label className="add-game-form__label">
           Название

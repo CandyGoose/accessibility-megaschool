@@ -3,6 +3,17 @@
   margin: 24px 0;
 }
 
+.add-game-form__notice {
+  max-width: 500px;
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  background: var(--color-card-bg);
+  border: 2px solid var(--color-border-light);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
 .add-game-form__label {
   display: block;
   margin-bottom: 16px;
