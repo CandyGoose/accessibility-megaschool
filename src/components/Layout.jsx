@@ -28,7 +28,7 @@ function Layout() {
       <header className="header" role="banner">
         <div className="header__inner">
           <h1 className="logo">
-            <Link to="/">Игры для слабовидящих</Link>
+            <Link to="/">Онлайн-игры для слабовидящих</Link>
           </h1>
           <nav className="nav" aria-label="Главное меню">
             <ul className="nav__list">
@@ -78,7 +78,7 @@ function Layout() {
       </main>
       <footer className="footer" role="contentinfo">
         <div className="footer__inner">
-          <p>Игры для слабовидящих</p>
+          <p>Онлайн-игры для слабовидящих</p>
         </div>
       </footer>
     </div>
