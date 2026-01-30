@@ -66,6 +66,8 @@
 - Страница игры: описание, информация о доступности и платформах, запуск игры, рейтинг (1-5), комментарии.
 <img alt="Страница игры" src="https://github.com/user-attachments/assets/af6e218d-a35b-4ff9-ad89-033a38e3020d" />
 
+<img alt="Простой пример игры" src="https://github.com/user-attachments/assets/6f301061-520a-4473-a70b-35bae4294528" />
+
 - Вход: обязательные поля "Имя" и "Email", выбор роли (автор/модератор), валидация и сообщения об ошибках.
 <img alt="Страница авторизации" src="https://github.com/user-attachments/assets/881e9e10-aa6b-4d81-9d8a-bb3d2941b17f" />
 
