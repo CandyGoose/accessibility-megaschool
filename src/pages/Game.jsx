@@ -95,8 +95,8 @@ function Game() {
     <>
       <nav aria-label="Хлебные крошки">
         <Link to="/games">Каталог</Link>
-        <span className="breadcrumb-sep"> / </span>
-        <span>{game.title}</span>
+        <span className="breadcrumb-sep" aria-hidden="true"> / </span>
+        <span aria-current="page">{game.title}</span>
       </nav>
       <h1>{game.title}</h1>
       <p>{game.description}</p>
@@ -112,11 +112,17 @@ function Game() {
       {game.status === GAME_STATUS.PUBLISHED ? (
         <>
           <div className="game-play-area">
-            {!showGameFrame ? (
+            {!game.playUrl ? (
+              <p className="game-no-play">
+                Игра загружена в формате {game.gameFormat === 'unity' ? 'Unity' : 'HTML'}
+                {game.archiveFileName && ` (файл: ${game.archiveFileName})`}. Пока недоступна для запуска.
+              </p>
+            ) : !showGameFrame ? (
               <button
                 type="button"
                 className="game-play-btn"
                 onClick={handlePlayClick}
+                aria-label={`Запустить игру: ${game.title}`}
               >
                 Играть
               </button>
