@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { addGame, getCategories } from '../data/games'
+import { addGame, getCategories, GAME_FORMATS } from '../data/games'
 import './AddGame.css'
 
 function AddGame() {
@@ -9,7 +9,8 @@ function AddGame() {
   const { user, isAuthor } = useAuth()
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [playUrl, setPlayUrl] = useState('')
+  const [gameFormat, setGameFormat] = useState('html')
+  const [archiveFile, setArchiveFile] = useState(null)
   const [categoryId, setCategoryId] = useState('other')
   const [keyboard, setKeyboard] = useState(false)
   const [sound, setSound] = useState(false)
@@ -31,7 +32,9 @@ function AddGame() {
     addGame({
       title: title.trim(),
       description: description.trim(),
-      playUrl: playUrl.trim(),
+      playUrl: '',
+      gameFormat: gameFormat || 'html',
+      archiveFileName: archiveFile?.name ?? '',
       authorName: user.name,
       authorId: user.id,
       categoryId: categoryId || 'other',
@@ -67,16 +70,30 @@ function AddGame() {
           />
         </label>
         <label className="add-game-form__label">
-          Ссылка на игру
+          Форма игры
+          <select
+            className="add-game-form__select"
+            value={gameFormat}
+            onChange={(e) => setGameFormat(e.target.value)}
+            aria-label="Форма игры"
+          >
+            {GAME_FORMATS.map((f) => (
+              <option key={f.id} value={f.id}>{f.name}</option>
+            ))}
+          </select>
+        </label>
+        <label className="add-game-form__label">
+          Файл игры (ZIP-архив)
           <input
-            type="url"
-            className="add-game-form__input"
-            value={playUrl}
-            onChange={(e) => setPlayUrl(e.target.value)}
-            required
-            aria-required="true"
-            placeholder="https://..."
+            type="file"
+            className="add-game-form__file"
+            accept=".zip"
+            onChange={(e) => setArchiveFile(e.target.files?.[0] ?? null)}
+            aria-label="Выберите ZIP-архив"
           />
+          {archiveFile && (
+            <span className="add-game-form__file-name">{archiveFile.name}</span>
+          )}
         </label>
         <label className="add-game-form__label">
           Категория
