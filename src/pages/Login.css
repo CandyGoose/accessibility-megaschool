@@ -1,6 +1,12 @@
+.login-title {
+  margin: 0 0 0.5em;
+  font-size: clamp(1.25rem, 5vw, 1.75rem);
+}
+
 .login-form {
   max-width: 400px;
   margin: 24px 0;
+  padding: 0;
 }
 
 .login-form__label {
@@ -9,15 +15,25 @@
   font-weight: 500;
 }
 
+.login-form__required {
+  color: var(--color-err);
+}
+
 .login-form__input,
 .login-form__select {
   display: block;
   width: 100%;
   margin-top: 4px;
-  padding: 8px 12px;
+  padding: 12px 14px;
   font-size: 1rem;
   border: 2px solid var(--color-border-light);
-  border-radius: 4px;
+  border-radius: 6px;
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.login-form__input_error {
+  border-color: var(--color-err);
 }
 
 .login-form__input:focus,
@@ -26,9 +42,17 @@
   border-color: var(--color-focus);
 }
 
+.login-form__error {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.875rem;
+  color: var(--color-err);
+}
+
 .login-form__submit {
-  margin-top: 16px;
-  padding: 12px 24px;
+  margin-top: 20px;
+  padding: 14px 24px;
+  min-height: 48px;
   font-size: 1rem;
   font-weight: 600;
   background: var(--color-focus);
@@ -36,6 +60,7 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .login-form__submit:hover {
@@ -45,5 +70,50 @@
 .login-form__submit:focus-visible {
   outline: 3px solid var(--color-focus);
   outline-offset: 2px;
+}
+
+.login-form__submit:active {
+  transform: scale(0.98);
+}
+
+.login-back {
+  margin: 24px 0 0;
+}
+
+@media (max-width: 480px) {
+  .login-title {
+    margin-top: env(safe-area-inset-top, 0);
+  }
+
+  .login-form {
+    margin-left: env(safe-area-inset-left, 0);
+    margin-right: env(safe-area-inset-right, 0);
+  }
+
+  .login-form__input,
+  .login-form__select {
+    padding: 14px 16px;
+    font-size: 16px;
+  }
+
+  .login-form__submit {
+    width: 100%;
+    padding: 16px;
+    margin-top: 24px;
+  }
+
+  .login-back {
+    margin-bottom: env(safe-area-inset-bottom, 0);
+  }
+}
+
+@media (hover: none) {
+  .login-form__submit:hover {
+    background: var(--color-focus);
+  }
+
+  .login-form__submit:active {
+    background: var(--color-btn-hover);
+  }
 }
 
