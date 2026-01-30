@@ -10,6 +10,12 @@ export const CATEGORIES = [
   { id: 'words', name: 'Слова и текст' },
   { id: 'memory', name: 'Память и внимание' },
   { id: 'logic', name: 'Логика' },
+  { id: 'novels', name: 'Новеллы' },
+  { id: 'shooters', name: 'Шутеры' },
+  { id: 'arcade', name: 'Аркады' },
+  { id: 'puzzle', name: 'Головоломки' },
+  { id: 'strategy', name: 'Стратегии' },
+  { id: 'simulator', name: 'Симуляторы' },
   { id: 'other', name: 'Другое' },
 ]
 

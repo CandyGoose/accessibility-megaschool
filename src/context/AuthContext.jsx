@@ -4,7 +4,6 @@ const ROLES = {
   GUEST: 'guest',
   AUTHOR: 'author',
   MODERATOR: 'moderator',
-  ADMIN: 'admin',
 }
 
 const STORAGE_KEY = 'megaschool_user'
@@ -52,9 +51,8 @@ export function AuthProvider({ children }) {
     user,
     login,
     logout,
-    isAuthor: user?.role === ROLES.AUTHOR || user?.role === ROLES.ADMIN,
-    isModerator: user?.role === ROLES.MODERATOR || user?.role === ROLES.ADMIN,
-    isAdmin: user?.role === ROLES.ADMIN,
+    isAuthor: user?.role === ROLES.AUTHOR || user?.role === ROLES.MODERATOR,
+    isModerator: user?.role === ROLES.MODERATOR,
     ROLES,
   }
 

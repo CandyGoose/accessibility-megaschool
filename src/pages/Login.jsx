@@ -92,7 +92,6 @@ function Login() {
           >
             <option value="author">Автор</option>
             <option value="moderator">Модератор</option>
-            <option value="admin">Админ</option>
           </select>
         </label>
         <button type="submit" className="login-form__submit">
