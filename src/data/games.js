@@ -16,13 +16,13 @@ export const CATEGORIES = [
 const STORAGE_KEY = 'megaschool_games'
 const defaultGames = [
   {
-    id: '1',
-    title: 'Угадай звук',
-    description: 'Игра на распознавание звуков.',
-    playUrl: '/games/ugadai-zvuk/index.html',
-    authorName: 'Автор 1',
-    authorId: 'author1',
-    categoryId: 'sound',
+    id: '2',
+    title: 'Слова на время',
+    description: 'Набирайте слова на время.',
+    playUrl: '/games/slova-na-vremya/index.html',
+    authorName: 'Автор 2',
+    authorId: 'author2',
+    categoryId: 'words',
     status: GAME_STATUS.PUBLISHED,
     publishedAt: '2026-01-15',
     views: 0,
@@ -32,24 +32,40 @@ const defaultGames = [
     comments: [],
   },
   {
-    id: '2',
-    title: 'Слова на время',
-    description: 'Набирайте слова с клавиатуры на время.',
-    playUrl: '/games/slova-na-vremya/index.html',
-    authorName: 'Автор 2',
-    authorId: 'author2',
-    categoryId: 'words',
+    id: '3',
+    title: 'Найди пары',
+    description: 'Открывайте карточки и находите одинаковые символы. Тренируйте память и внимание.',
+    playUrl: '/games/pamjat/index.html',
+    authorName: 'Автор N',
+    authorId: 'megaschool',
+    categoryId: 'memory',
+    status: GAME_STATUS.PUBLISHED,
+    publishedAt: '2026-01-30',
+    views: 0,
+    launches: 0,
+    accessibility: { keyboard: false, sound: false, screenReader: true },
+    ratings: [],
+    comments: [],
+  },
+  {
+    id: '5',
+    title: 'Быстрый счет',
+    description: 'Решайте примеры на время. Сложение, вычитание, умножение и деление.',
+    playUrl: '/games/bystryj-schet/index.html',
+    authorName: 'Автор X',
+    authorId: 'megaschool',
+    categoryId: 'logic',
     status: GAME_STATUS.PUBLISHED,
     publishedAt: '2026-01-20',
     views: 0,
     launches: 0,
-    accessibility: { keyboard: true, sound: true, screenReader: true },
+    accessibility: { keyboard: true, sound: false, screenReader: true },
     ratings: [],
     comments: [],
   },
 ]
 
-let nextId = 3
+let nextId = 6
 let nextCommentId = 1
 const gamesList = [...defaultGames]
 
@@ -65,12 +81,15 @@ function loadGames() {
       return arr.reduce((mc, c) => Math.max(mc, Number(c.id) || 0), m)
     }, 0)
     gamesList.length = 0
-    gamesList.push(...data.games)
+    gamesList.push(...data.games.filter((g) => g.id !== '1' && g.id !== '4'))
     gamesList.forEach((g) => {
-      if (g.id === '1' && (g.playUrl || '').includes('example.com')) g.playUrl = '/games/ugadai-zvuk/index.html'
       if (g.id === '2' && (g.playUrl || '').includes('example.com')) g.playUrl = '/games/slova-na-vremya/index.html'
     })
-    nextId = (Number(data.nextId) > maxId ? Number(data.nextId) : maxId + 1) || 3
+    defaultGames.forEach((dg) => {
+      if (dg.id >= '3' && !gamesList.some((g) => g.id === dg.id)) gamesList.push({ ...dg })
+    })
+    const mergedMaxId = gamesList.reduce((m, g) => Math.max(m, Number(g.id) || 0), 0)
+    nextId = Math.max(Number(data.nextId) || 3, mergedMaxId + 1, 6)
     nextCommentId = (Number(data.nextCommentId) > maxC ? Number(data.nextCommentId) : maxC + 1) || 1
   } catch {}
 }
