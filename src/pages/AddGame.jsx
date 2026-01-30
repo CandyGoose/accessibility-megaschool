@@ -15,6 +15,8 @@ function AddGame() {
   const [keyboard, setKeyboard] = useState(false)
   const [sound, setSound] = useState(false)
   const [screenReader, setScreenReader] = useState(false)
+  const [platformMobile, setPlatformMobile] = useState(true)
+  const [platformDesktop, setPlatformDesktop] = useState(true)
   const categories = getCategories()
 
   if (!user || !isAuthor) {
@@ -39,6 +41,7 @@ function AddGame() {
       authorId: user.id,
       categoryId: categoryId || 'other',
       accessibility: { keyboard, sound, screenReader },
+      platforms: { mobile: platformMobile, desktop: platformDesktop },
     })
     navigate('/my-games')
   }
@@ -136,6 +139,27 @@ function AddGame() {
               aria-label="Работа со скринридером"
             />
             Работа со скринридером
+          </label>
+        </fieldset>
+        <fieldset className="add-game-form__platforms" aria-label="Платформы">
+          <legend>Платформы</legend>
+          <label className="add-game-form__checkbox">
+            <input
+              type="checkbox"
+              checked={platformMobile}
+              onChange={(e) => setPlatformMobile(e.target.checked)}
+              aria-label="Мобильная"
+            />
+            Мобильная
+          </label>
+          <label className="add-game-form__checkbox">
+            <input
+              type="checkbox"
+              checked={platformDesktop}
+              onChange={(e) => setPlatformDesktop(e.target.checked)}
+              aria-label="Компьютер"
+            />
+            Компьютер
           </label>
         </fieldset>
         <button type="submit" className="add-game-form__submit">

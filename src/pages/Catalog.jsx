@@ -9,12 +9,16 @@ const ACCESSIBILITY_ALL = ''
 const ACCESSIBILITY_SCREEN_READER = 'screenReader'
 const ACCESSIBILITY_KEYBOARD = 'keyboard'
 const ACCESSIBILITY_SOUND = 'sound'
+const PLATFORM_ALL = ''
+const PLATFORM_MOBILE = 'mobile'
+const PLATFORM_DESKTOP = 'desktop'
 
 function Catalog() {
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState(SORT_BY_DATE)
   const [categoryId, setCategoryId] = useState('')
   const [accessibility, setAccessibility] = useState(ACCESSIBILITY_ALL)
+  const [platform, setPlatform] = useState(PLATFORM_ALL)
   const all = getPublishedGames()
   const categories = getCategories()
 
@@ -23,6 +27,7 @@ function Catalog() {
       (g) => (!search.trim() || g.title.toLowerCase().includes(search.trim().toLowerCase()))
         && (!categoryId || g.categoryId === categoryId)
         && (!accessibility || (g.accessibility && g.accessibility[accessibility]))
+        && (!platform || g.platforms?.[platform] !== false)
     )
     if (sortBy === SORT_BY_DATE) {
       result = [...result].sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''))
@@ -30,7 +35,7 @@ function Catalog() {
       result = [...result].sort((a, b) => a.title.localeCompare(b.title))
     }
     return result
-  }, [all, search, sortBy, categoryId, accessibility])
+  }, [all, search, sortBy, categoryId, accessibility, platform])
 
   return (
     <>
@@ -76,6 +81,19 @@ function Catalog() {
           </select>
         </label>
         <label className="catalog-controls__label">
+          Платформа
+          <select
+            className="catalog-controls__select"
+            value={platform}
+            onChange={(e) => setPlatform(e.target.value)}
+            aria-label="Фильтр по платформе"
+          >
+            <option value={PLATFORM_ALL}>Все</option>
+            <option value={PLATFORM_MOBILE}>Мобильная</option>
+            <option value={PLATFORM_DESKTOP}>Компьютер</option>
+          </select>
+        </label>
+        <label className="catalog-controls__label">
           Сортировка
           <select
             className="catalog-controls__select"
@@ -104,6 +122,12 @@ function Catalog() {
                   <span className="catalog-list__accessibility">
                     {' · '}
                     {[game.accessibility.screenReader && 'скринридер', game.accessibility.keyboard && 'клавиатура', game.accessibility.sound && 'звук'].filter(Boolean).join(', ')}
+                  </span>
+                )}
+                {(game.platforms?.mobile || game.platforms?.desktop) && (
+                  <span className="catalog-list__platforms">
+                    {' · '}
+                    {[game.platforms.mobile && 'мобильная', game.platforms.desktop && 'компьютер'].filter(Boolean).join(', ')}
                   </span>
                 )}
               </p>
