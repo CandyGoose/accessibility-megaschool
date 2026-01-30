@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Найди пары</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; padding: 24px; margin: 0; background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #21262d 100%); color: #e6edf3; min-height: 100vh; }
+    h1 { font-size: 1.5rem; margin: 0 0 8px; font-weight: 700; }
+    .subtitle { color: #8b949e; margin: 0 0 20px; font-size: 0.9rem; }
+    .toolbar { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+    .toolbar select { padding: 10px 14px; font-size: 0.95rem; background: #21262d; border: 1px solid #30363d; color: #e6edf3; border-radius: 8px; cursor: pointer; }
+    .toolbar .btn { padding: 10px 20px; font-size: 0.95rem; font-weight: 600; background: #238636; color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: transform 0.2s; }
+    .toolbar .btn:hover { transform: translateY(-1px); }
+    .stats { display: flex; gap: 20px; margin-bottom: 20px; }
+    .stat { padding: 8px 16px; background: #21262d; border-radius: 8px; }
+    .stat span { color: #8b949e; font-size: 0.85rem; }
+    .stat strong { font-size: 1.2rem; color: #58a6ff; margin-left: 6px; }
+    .grid { display: grid; gap: 12px; max-width: 520px; margin: 0 auto; }
+    .grid.size-8 { grid-template-columns: repeat(4, 1fr); }
+    .grid.size-12 { grid-template-columns: repeat(4, 1fr); }
+    .grid.size-16 { grid-template-columns: repeat(4, 1fr); }
+    .card { aspect-ratio: 1; border-radius: 12px; border: 2px solid #30363d; background: linear-gradient(135deg, #21262d, #161b22); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; color: transparent; transition: transform 0.2s, background 0.2s, color 0.2s; user-select: none; }
+    .card:hover { transform: scale(1.03); border-color: #58a6ff; }
+    .card.flipped, .card.matched { color: #e6edf3; background: linear-gradient(135deg, #238636, #2ea043); border-color: #3fb950; cursor: default; }
+    .card.flipped { background: linear-gradient(135deg, #388bfd, #58a6ff); border-color: #58a6ff; }
+    .card.matched { animation: match 0.4s ease; }
+    @keyframes match { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+    .card .back { font-size: 1.4rem; color: #484f58; display: block; }
+.card .face { display: none; font-size: 1.8rem; }
+.card.flipped .back, .card.matched .back { display: none; }
+.card.flipped .face, .card.matched .face { display: block !important; }
+    .win-msg { margin-top: 24px; padding: 20px; background: rgba(35, 134, 54, 0.2); border: 1px solid #238636; border-radius: 12px; font-size: 1.1rem; text-align: center; display: none; }
+    .win-msg.show { display: block; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .voice-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem; color: #8b949e; margin-left: 12px; }
+    .voice-toggle input { width: auto; }
+    .speak-btn { padding: 8px 16px; font-size: 0.9rem; background: #21262d; color: #8b949e; border: 1px solid #30363d; border-radius: 8px; cursor: pointer; }
+    .speak-btn:hover, .speak-btn:focus { background: #30363d; color: #e6edf3; }
+    button:focus-visible, select:focus-visible, [role="button"]:focus-visible { outline: 3px solid #58a6ff; outline-offset: 2px; }
+    .keyboard-hint { font-size: 0.8rem; color: #8b949e; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+  <main role="main" aria-label="Игра Найди пары">
+  <h1>Найди пары</h1>
+  <p class="keyboard-hint" id="keyboardHint">Управление: Tab - переход по карточкам и кнопкам, Enter или Пробел - открыть карточку или нажать кнопку.</p>
+  <p class="subtitle" id="instructions">Открывайте карточки и находите одинаковые символы. Меньше ходов - лучше результат!</p>
+  <button type="button" class="speak-btn" id="introBtn" aria-label="Озвучить инструкцию">Как играть</button>
+  <div class="toolbar">
+    <label>Сложность:
+      <select id="size">
+        <option value="8">8 карт (4 пары)</option>
+        <option value="12" selected>12 карт (6 пар)</option>
+        <option value="16">16 карт (8 пар)</option>
+      </select>
+    </label>
+    <button type="button" class="btn" id="newGame">Новая игра</button>
+    <label class="voice-toggle"><input type="checkbox" id="voiceOn" checked> Озвучивать</label>
+    <button type="button" class="speak-btn" id="repeatBtn" aria-label="Повторить состояние">Повторить</button>
+  </div>
+  <div class="stats">
+    <div class="stat">Ходы: <strong id="moves">0</strong></div>
+    <div class="stat">Пары: <strong id="pairs">0</strong> / <span id="totalPairs">6</span></div>
+  </div>
+  <div class="grid size-12" id="grid"></div>
+  <div class="win-msg" id="winMsg">Поздравляем! Вы нашли все пары за <strong id="finalMoves">0</strong> ходов.</div>
+  </main>
+  <script>
+    var emoji = ['🌟', '🎯', '🔥', '💎', '🎸', '🚀', '🌈', '⚡', '🎨', '🍀', '🎪', '🎭', '🏆', '🌺', '🎲', '🦋'];
+    var emojiNames = ['звезда', 'цель', 'огонь', 'бриллиант', 'гитара', 'ракета', 'радуга', 'молния', 'палитра', 'клевер', 'цирк', 'маска', 'кубок', 'цветок', 'кубик', 'бабочка'];
+    var gridEl = document.getElementById('grid');
+    var movesEl = document.getElementById('moves');
+    var pairsEl = document.getElementById('pairs');
+    var totalPairsEl = document.getElementById('totalPairs');
+    var winMsgEl = document.getElementById('winMsg');
+    var finalMovesEl = document.getElementById('finalMoves');
+    var cards = [];
+    var flipped = [];
+    var moves = 0;
+    var pairsFound = 0;
+    var totalPairs = 6;
+    var lock = false;
+    var voiceOn = localStorage.getItem('pamjat_voice') !== '0';
+    if (document.getElementById('voiceOn')) document.getElementById('voiceOn').checked = voiceOn;
+    function say(t) {
+      if (!voiceOn || !window.speechSynthesis || !t) return;
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(t);
+      u.lang = 'ru-RU';
+      u.rate = 0.9;
+      window.speechSynthesis.speak(u);
+    }
+    function nameForSymbol(sym) {
+      var i = emoji.indexOf(sym);
+      return i >= 0 ? emojiNames[i] : sym;
+    }
+    function getPairsCount() {
+      var n = parseInt(document.getElementById('size').value, 10) || 12;
+      return n / 2;
+    }
+    function buildDeck() {
+      var count = getPairsCount();
+      totalPairs = count;
+      totalPairsEl.textContent = count;
+      var symbols = emoji.slice(0, count);
+      var deck = symbols.concat(symbols);
+      for (var i = deck.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = deck[i]; deck[i] = deck[j]; deck[j] = t;
+      }
+      return deck;
+    }
+    function render() {
+      var count = getPairsCount() * 2;
+      gridEl.innerHTML = '';
+      gridEl.className = 'grid size-' + count;
+      cards = buildDeck();
+      cards.forEach(function(symbol, index) {
+        var div = document.createElement('div');
+        div.className = 'card';
+        div.setAttribute('data-index', index);
+        div.setAttribute('data-symbol', symbol);
+        div.setAttribute('aria-label', 'Карточка ' + (index + 1) + ', закрыта');
+        div.setAttribute('role', 'button');
+        div.setAttribute('tabindex', '0');
+        div.innerHTML = '<span class="back">?</span><span class="face" aria-hidden="true">' + symbol + '</span>';
+        div.addEventListener('click', function() { flip(index); });
+        div.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(index); } });
+        gridEl.appendChild(div);
+      });
+      moves = 0;
+      pairsFound = 0;
+      flipped = [];
+      lock = false;
+      movesEl.textContent = '0';
+      pairsEl.textContent = '0';
+      winMsgEl.classList.remove('show');
+    }
+    function flip(index) {
+      if (lock) return;
+      var card = gridEl.children[index];
+      if (!card || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+      card.classList.add('flipped');
+      var sym = card.getAttribute('data-symbol');
+      card.setAttribute('aria-label', 'Карточка открыта: ' + nameForSymbol(sym));
+      say('Открыта карточка: ' + nameForSymbol(sym));
+      flipped.push({ index: index, symbol: sym, el: card });
+      if (flipped.length === 2) {
+        moves++;
+        movesEl.textContent = moves;
+        lock = true;
+        if (flipped[0].symbol === flipped[1].symbol) {
+          flipped[0].el.classList.remove('flipped');
+          flipped[0].el.classList.add('matched');
+          flipped[1].el.classList.remove('flipped');
+          flipped[1].el.classList.add('matched');
+          pairsFound++;
+          pairsEl.textContent = pairsFound;
+          flipped[0].el.setAttribute('aria-label', 'Пара найдена: ' + nameForSymbol(flipped[0].symbol));
+          flipped[1].el.setAttribute('aria-label', 'Пара найдена: ' + nameForSymbol(flipped[1].symbol));
+          say('Пара найдена. Всего пар: ' + pairsFound + ' из ' + totalPairs);
+          flipped = [];
+          lock = false;
+          if (pairsFound === totalPairs) {
+            finalMovesEl.textContent = moves;
+            winMsgEl.classList.add('show');
+            say('Игра окончена. Вы нашли все пары за ' + moves + ' ходов.');
+          }
+        } else {
+          var n1 = flipped[0].index + 1;
+          var n2 = flipped[1].index + 1;
+          var name1 = nameForSymbol(flipped[0].symbol);
+          var name2 = nameForSymbol(flipped[1].symbol);
+          say('Не пара. Карточка ' + n1 + ': ' + name1 + '. Карточка ' + n2 + ': ' + name2 + '. Запомните и найдите пары.');
+          setTimeout(function() {
+            flipped[0].el.classList.remove('flipped');
+            flipped[0].el.setAttribute('aria-label', 'Карточка ' + n1 + ', закрыта');
+            flipped[1].el.classList.remove('flipped');
+            flipped[1].el.setAttribute('aria-label', 'Карточка ' + n2 + ', закрыта');
+            flipped = [];
+            lock = false;
+          }, 700);
+        }
+      }
+    }
+    document.getElementById('newGame').addEventListener('click', render);
+    document.getElementById('size').addEventListener('change', function() {
+      render();
+    });
+    document.getElementById('repeatBtn').addEventListener('click', function() {
+      var msg = 'Ходов: ' + moves + '. Пар найдено: ' + pairsFound + ' из ' + totalPairs;
+      if (pairsFound === totalPairs) msg = 'Игра окончена. Все пары за ' + moves + ' ходов.';
+      say(msg);
+    });
+    document.getElementById('voiceOn').addEventListener('change', function() {
+      voiceOn = this.checked;
+      localStorage.setItem('pamjat_voice', voiceOn ? '1' : '0');
+      if (voiceOn) document.getElementById('repeatBtn').click();
+    });
+    document.getElementById('introBtn').addEventListener('click', function() {
+      say('Память - найди пары. Управление с клавиатуры: Tab - переход по карточкам и кнопкам, Enter или Пробел - открыть карточку или нажать кнопку. Две карточки с одинаковым символом - пара. Запомните позиции. Выберите сложность: 4, 6 или 8 пар.');
+    });
+    render();
+  </script>
+</body>
+</html>
