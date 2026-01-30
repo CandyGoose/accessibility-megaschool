@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import {
@@ -23,10 +23,37 @@ function Game() {
   const [commentName, setCommentName] = useState(user?.name ?? '')
   const [refresh, setRefresh] = useState(0)
   const [showGameFrame, setShowGameFrame] = useState(false)
+  const fullscreenRef = useRef(null)
 
   useEffect(() => {
     if (game?.id) recordView(game.id)
   }, [game?.id])
+
+  useEffect(() => {
+    if (!showGameFrame || !fullscreenRef.current) return
+    const el = fullscreenRef.current
+    const onFullscreenChange = () => {
+      if (!document.fullscreenElement) setShowGameFrame(false)
+    }
+    document.addEventListener('fullscreenchange', onFullscreenChange)
+    const req = el.requestFullscreen?.() ?? el.webkitRequestFullscreen?.()
+    if (req?.then) req.catch(() => {})
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange)
+  }, [showGameFrame])
+
+  useEffect(() => {
+    if (!showGameFrame) return
+    const onKeyDown = (e) => {
+      if (e.key !== 'Escape') return
+      if (document.fullscreenElement) {
+        document.exitFullscreen?.() ?? document.webkitExitFullscreen?.()
+      } else {
+        setShowGameFrame(false)
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [showGameFrame])
 
   if (!game) {
     return (
@@ -94,7 +121,10 @@ function Game() {
                 Играть
               </button>
             ) : (
-              <div className="game-frame-wrap">
+              <div ref={fullscreenRef} className="game-frame-wrap">
+                <p className="game-frame-exit-hint" aria-live="polite">
+                  Escape - выход из игры
+                </p>
                 <iframe
                   src={game.playUrl}
                   title={game.title}
