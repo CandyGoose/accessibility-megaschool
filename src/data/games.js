@@ -27,7 +27,7 @@ export const GAME_FORMATS = [
 const STORAGE_KEY = 'megaschool_games'
 const defaultGames = [
   {
-    id: '2',
+    id: '1',
     title: 'Слова на время',
     description: 'Набирайте слова на время.',
     playUrl: '/games/slova-na-vremya/index.html',
@@ -44,7 +44,7 @@ const defaultGames = [
     comments: [],
   },
   {
-    id: '3',
+    id: '2',
     title: 'Найди пары',
     description: 'Открывайте карточки и находите одинаковые символы. Тренируйте память и внимание.',
     playUrl: '/games/pamjat/index.html',
@@ -61,7 +61,7 @@ const defaultGames = [
     comments: [],
   },
   {
-    id: '5',
+    id: '3',
     title: 'Быстрый счет',
     description: 'Решайте примеры на время. Сложение, вычитание, умножение и деление.',
     playUrl: '/games/bystryj-schet/index.html',
