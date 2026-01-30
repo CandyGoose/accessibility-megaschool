@@ -83,10 +83,26 @@
   background-color: var(--color-bg);
 }
 
+#root {
+  min-width: 0;
+  max-width: 100%;
+}
+
+img, video, iframe, table {
+  max-width: 100%;
+  height: auto;
+}
+
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
 }
 
 a {
