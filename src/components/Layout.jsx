@@ -78,7 +78,7 @@ function Layout() {
       </main>
       <footer className="footer" role="contentinfo">
         <div className="footer__inner">
-          <p>Онлайн-игры для слабовидящих</p>
+          <p>Браузерные онлайн-игры для слабовидящих</p>
         </div>
       </footer>
     </div>
