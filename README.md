@@ -100,8 +100,7 @@
 
 ### 3.4. Установка и запуск
 
-bash
-```
+```bash
 npm install
 npm run dev
 ```
