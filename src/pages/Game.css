@@ -12,6 +12,15 @@
   margin: 24px 0;
 }
 
+.game-no-play {
+  margin: 0;
+  padding: 16px;
+  background: var(--color-card-bg);
+  border: 2px solid var(--color-border-light);
+  border-radius: 8px;
+  color: var(--color-text-muted);
+}
+
 .game-play-btn {
   display: inline-block;
   padding: 12px 24px;

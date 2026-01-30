@@ -14,7 +14,15 @@ function Layout() {
   ]
   return (
     <div className="app">
-      <Link to="/#main" className="skip-link">
+      <Link
+        to="/#main"
+        className="skip-link"
+        onClick={(e) => {
+          e.preventDefault()
+          const main = document.getElementById('main')
+          if (main) main.focus({ preventScroll: false })
+        }}
+      >
         Перейти к основному содержимому
       </Link>
       <header className="header" role="banner">
@@ -63,7 +71,7 @@ function Layout() {
           </nav>
         </div>
       </header>
-      <main id="main" className="main" role="main">
+      <main id="main" className="main" role="main" tabIndex={-1}>
         <div className="main__inner">
           <Outlet />
         </div>

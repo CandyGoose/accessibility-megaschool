@@ -13,6 +13,11 @@ export const CATEGORIES = [
   { id: 'other', name: 'Другое' },
 ]
 
+export const GAME_FORMATS = [
+  { id: 'html', name: 'HTML' },
+  { id: 'unity', name: 'Unity' },
+]
+
 const STORAGE_KEY = 'megaschool_games'
 const defaultGames = [
   {
@@ -137,7 +142,9 @@ export function addGame(data) {
     id: String(nextId++),
     title: data.title,
     description: data.description,
-    playUrl: data.playUrl,
+    playUrl: data.playUrl ?? '',
+    gameFormat: data.gameFormat ?? null,
+    archiveFileName: data.archiveFileName ?? '',
     authorName: data.authorName,
     authorId: data.authorId,
     categoryId: data.categoryId ?? 'other',
