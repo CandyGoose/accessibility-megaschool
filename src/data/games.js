@@ -95,12 +95,12 @@ function loadGames() {
       return arr.reduce((mc, c) => Math.max(mc, Number(c.id) || 0), m)
     }, 0)
     gamesList.length = 0
-    gamesList.push(...data.games.filter((g) => g.id !== '1' && g.id !== '4'))
+    gamesList.push(...data.games.filter((g) => g.id !== '4'))
     gamesList.forEach((g) => {
       if (g.id === '2' && (g.playUrl || '').includes('example.com')) g.playUrl = '/games/slova-na-vremya/index.html'
     })
     defaultGames.forEach((dg) => {
-      if (dg.id >= '3' && !gamesList.some((g) => g.id === dg.id)) gamesList.push({ ...dg })
+      if (dg.id >= '1' && !gamesList.some((g) => g.id === dg.id)) gamesList.push({ ...dg })
     })
     const mergedMaxId = gamesList.reduce((m, g) => Math.max(m, Number(g.id) || 0), 0)
     nextId = Math.max(Number(data.nextId) || 3, mergedMaxId + 1, 6)
